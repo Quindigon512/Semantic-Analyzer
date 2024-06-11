@@ -1,0 +1,99 @@
+
+// stack : [peg id, stack size, bottom, ... , top, garbage, ... ]
+
+func printstack::bool( stk::num[] )
+begin
+    var i::num;
+    var arr::num[];
+    arr := new num[stk[1]];
+    i := 0;
+    while i < arr.size
+    begin
+        arr[i] := stk[i+2];
+        i := i + 1;
+    end
+    print arr;
+    return true;
+end
+
+func push::bool( stk::num[], val::num )
+begin
+    stk[1] := stk[1] + 1;
+    stk[stk[1]+1] := val;
+    return true;
+end
+
+func pop::num( stk::num[] )
+begin
+    var top::num;
+    top := stk[stk[1]+1];
+    stk[1] := stk[1] - 1;
+    return top;
+end
+
+func printhanoi_sel::bool( sel::num, peg_a::num[] , peg_b::num[] , peg_c::num[] )
+begin
+    var gbg::bool;
+    if sel = peg_a[0] then gbg := printstack(peg_a); else end
+    if sel = peg_b[0] then gbg := printstack(peg_b); else end
+    if sel = peg_c[0] then gbg := printstack(peg_c); else end
+    return true;
+end
+
+func printhanoi::bool( peg_a::num[] , peg_b::num[] , peg_c::num[] )
+begin
+    var gbg::bool;
+    gbg := printhanoi_sel(1, peg_a, peg_b, peg_c);
+    gbg := printhanoi_sel(2, peg_a, peg_b, peg_c);
+    gbg := printhanoi_sel(3, peg_a, peg_b, peg_c);
+    print 9.99999999999999; // print separator
+    return true;
+end
+
+func hanoi::num( n::num, start::num[] , aux::num[] , target::num[] )
+begin
+    var step :: num;
+    var gbg :: bool;
+    step := 0;
+    if n > 0 then
+        step := step + hanoi( n-1, start, target, aux );
+        //target.append(start.pop())
+        gbg := push(target, pop (start));
+        gbg := printhanoi(start, aux, target);
+        step := step + 1;
+        step := step + hanoi( n-1, aux, start, target );
+    else end
+    return step;
+end
+
+func main :: num ()
+begin
+    var peg_a :: num[];
+    var peg_b :: num[];
+    var peg_c :: num[];
+    var n :: num;
+    var i :: num;
+    var steps :: num;
+    var gbg :: bool;
+
+    // make all pegs empty
+    peg_a := new num[10]; peg_a[0] := 1; peg_a[1] := 0;
+    peg_b := new num[10]; peg_b[0] := 2; peg_b[1] := 0;
+    peg_c := new num[10]; peg_c[0] := 3; peg_c[1] := 0;
+    // add disks to peg_a
+    n := 5;
+    peg_a[1] := n;
+    i := 0;
+    while i < n
+    begin
+        peg_a[i+2] := n - i;
+        i := i + 1;
+    end
+
+    // solve hanoi tower
+    gbg := printhanoi( peg_a, peg_b, peg_c );
+    steps := hanoi(n, peg_a, peg_b, peg_c);
+    print steps;
+
+    return 1;
+end

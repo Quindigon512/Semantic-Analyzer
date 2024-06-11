@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 2:6] Function pi() should return at least one value.

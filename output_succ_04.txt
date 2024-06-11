@@ -1,0 +1,66 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func main::num()
+begin
+    var num::i;
+    var num::x;
+    var bool[]::y;
+    var num[]::z;
+    x := 1.0;
+    y := new bool[3.0];
+    y[0.0] := true;
+    y[1.0] := true and false;
+    y[2.0] := y[1.0] or true;
+    print y;
+    i := 5.0;
+    z := new num[i];
+    i := 0.0;
+    z[i] := 0.0;
+    i := i + 1.0;
+    z[i] := z[i - 1.0] + i;
+    i := i + 1.0;
+    z[i] := z[i - 1.0] + i;
+    i := i + 1.0;
+    z[i] := z[i - 1.0] + i;
+    i := i + 1.0;
+    z[i] := z[i - 1.0] + i;
+    print z;
+    return 1.0;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func main::num()
+begin
+    var num::i; // relative address of local variable i from this func call base pointer is 1
+    var num::x; // relative address of local variable x from this func call base pointer is 2
+    var bool[]::y; // relative address of local variable y from this func call base pointer is 3
+    var num[]::z; // relative address of local variable z from this func call base pointer is 4
+    x{addr:2} := 1.0;
+    y{addr:3} := new bool[3.0];
+    y{addr:3}[0.0] := true;
+    y{addr:3}[1.0] := true and false;
+    y{addr:3}[2.0] := y[1.0] or true;
+    print y{addr:3};
+    i{addr:1} := 5.0;
+    z{addr:4} := new num[i{addr:1}];
+    i{addr:1} := 0.0;
+    z{addr:4}[i{addr:1}] := 0.0;
+    i{addr:1} := i{addr:1} + 1.0;
+    z{addr:4}[i{addr:1}] := z[i{addr:1} - 1.0] + i{addr:1};
+    i{addr:1} := i{addr:1} + 1.0;
+    z{addr:4}[i{addr:1}] := z[i{addr:1} - 1.0] + i{addr:1};
+    i{addr:1} := i{addr:1} + 1.0;
+    z{addr:4}[i{addr:1}] := z[i{addr:1} - 1.0] + i{addr:1};
+    i{addr:1} := i{addr:1} + 1.0;
+    z{addr:4}[i{addr:1}] := z[i{addr:1} - 1.0] + i{addr:1};
+    print z{addr:4};
+    return 1.0;
+end
+================================================================================
+Execute:
+[true, false, true]
+[0.0, 1.0, 3.0, 6.0, 10.0]
+Returned value by main: 1.0
+================================================================================

@@ -1,0 +1,30 @@
+
+func pi::num()
+begin
+end
+
+func select::num( sel::bool , v1::num , v2::num )
+begin
+    if sel then
+        return v1;
+    else
+        return v2;
+    end
+end
+
+func main :: num ()
+begin
+    var leng :: num ;
+    var circ :: num ;
+    var pyra :: num ; // pyramid
+    var sele :: num ;
+
+    leng := 2;
+    circ := leng * leng * pi();
+    pyra := leng*2 * leng*2 * 0.43301270189;
+
+    sele := select( circ>pyra, circ, pyra );
+    print sele;
+
+    return 1;
+end

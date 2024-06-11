@@ -1,0 +1,64 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func pi::num()
+begin
+    return 3.14159265358979;
+end
+func select::num(sel::bool, v1::num, v2::num)
+begin
+    if sel then
+        return v1;
+    else
+        return v2;
+    end
+end
+func main::num()
+begin
+    var num::leng;
+    var num::circ;
+    var num::pyra;
+    var num::sele;
+    leng := 2.0;
+    circ := leng * leng * pi();
+    pyra := leng * 2.0 * leng * 2.0 * 0.43301270189;
+    sele := select(circ > pyra,circ,pyra);
+    print sele;
+    return 1.0;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func pi::num()
+begin
+    return 3.14159265358979;
+end
+func select::num(sel::bool, v1::num, v2::num)
+// relative address of parameter sel from this function call base pointer is -1
+// relative address of parameter v1 from this function call base pointer is -2
+// relative address of parameter v2 from this function call base pointer is -3
+begin
+    if sel{addr:-1} then
+        return v1{addr:-2};
+    else
+        return v2{addr:-3};
+    end
+end
+func main::num()
+begin
+    var num::leng; // relative address of local variable leng from this func call base pointer is 1
+    var num::circ; // relative address of local variable circ from this func call base pointer is 2
+    var num::pyra; // relative address of local variable pyra from this func call base pointer is 3
+    var num::sele; // relative address of local variable sele from this func call base pointer is 4
+    leng{addr:1} := 2.0;
+    circ{addr:2} := leng{addr:1} * leng{addr:1} * pi();
+    pyra{addr:3} := leng{addr:1} * 2.0 * leng{addr:1} * 2.0 * 0.43301270189;
+    sele{addr:4} := select(circ{addr:2} > pyra{addr:3},circ{addr:2},pyra{addr:3});
+    print sele{addr:4};
+    return 1.0;
+end
+================================================================================
+Execute:
+12.56637061435916
+Returned value by main: 1.0
+================================================================================

@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 7:12] Unary operation not cannot be used with num value.

@@ -1,0 +1,64 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func fib::num(n::num)
+begin
+    var num::n1;
+    var num::n2;
+    if n <= 1.0 then
+        return n;
+    else
+        n1 := fib(n - 1.0);
+        n2 := fib(n - 2.0);
+        return (n1 + n2);
+    end
+end
+func main::num()
+begin
+    var num[]::fibs;
+    var num::i;
+    fibs := new num[15.0];
+    i := 0.0;
+    while i < fibs.size
+    begin
+        fibs[i] := fib(i + 1.0);
+        i := i + 1.0;
+    end
+    print fibs;
+    return 1.0;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func fib::num(n::num)
+// relative address of parameter n from this function call base pointer is -1
+begin
+    var num::n1; // relative address of local variable n1 from this func call base pointer is 1
+    var num::n2; // relative address of local variable n2 from this func call base pointer is 2
+    if n{addr:-1} <= 1.0 then
+        return n{addr:-1};
+    else
+        n1{addr:1} := fib(n{addr:-1} - 1.0);
+        n2{addr:2} := fib(n{addr:-1} - 2.0);
+        return (n1{addr:1} + n2{addr:2});
+    end
+end
+func main::num()
+begin
+    var num[]::fibs; // relative address of local variable fibs from this func call base pointer is 1
+    var num::i; // relative address of local variable i from this func call base pointer is 2
+    fibs{addr:1} := new num[15.0];
+    i{addr:2} := 0.0;
+    while i{addr:2} < fibs.size
+    begin
+        fibs{addr:1}[i{addr:2}] := fib(i{addr:2} + 1.0);
+        i{addr:2} := i{addr:2} + 1.0;
+    end
+    print fibs{addr:1};
+    return 1.0;
+end
+================================================================================
+Execute:
+[1.0, 1.0, 2.0, 3.0, 5.0, 8.0, 13.0, 21.0, 34.0, 55.0, 89.0, 144.0, 233.0, 377.0, 610.0]
+Returned value by main: 1.0
+================================================================================

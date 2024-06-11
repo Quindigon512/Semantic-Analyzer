@@ -1,0 +1,153 @@
+Lexer Information:
+
+num          = [0-9]+("."[0-9]+)?
+identifier   = [a-zA-Z][a-zA-Z0-9_]*
+newline      = \n
+whitespace   = [ \t\r]+
+linecomment  = "//".*
+blockcomment = "{"[^]*"}"
+
+FUNC                "func"
+RETURN              "return"
+VAR                 "var"
+IF                  "if"
+THEN                "then"
+ELSE                "else"
+BEGIN               "begin"
+END                 "end"
+WHILE               "while"
+LPAREN              "("
+RPAREN              ")"
+LBRACKET            "["
+RBRACKET            "]"
+NEW                 "new"
+NUM                 "num"
+BOOL                "bool"
+PRINT               "print"
+DOT                 "."
+SIZE                "size"
+ASSIGN              ":="
+TYPEOF              "::"
+ADD                 "+"
+SUB                 "-"
+MUL                 "*"
+DIV                 "/"
+MOD                 "%"
+AND                 "and"
+OR                  "or"
+NOT                 "not"
+LT                  "<"
+GT                  ">"
+LE                  "<="
+GE                  ">="
+EQ                  "="
+NE                  "<>"
+SEMI                ";"
+COMMA               ","
+BOOL_LIT            "true"|"false"
+NUM_LIT             {num}
+IDENT               {identifier}
+
+======================================================================================================
+Parser Information:
+
+%right  ASSIGN
+%left   OR
+%left   AND
+%right  NOT
+%left   EQ  NE
+%left   LE  LT  GE  GT
+%left   ADD SUB
+%left   MUL DIV MOD
+
+program             ->  decl_list
+decl_list           ->  decl_list  decl  |  eps
+decl                ->  func_decl
+func_decl           ->  FUNC  IDENT  TYPEOF  type_spec  LPAREN  params  RPAREN  BEGIN  local_decls  stmt_list  END
+params              ->  param_list  |  eps
+param_list          ->  param_list  COMMA  param  |  param
+param               ->  IDENT  TYPEOF  type_spec
+type_spec           ->  prim_type  |  prim_type  LBRACKET  RBRACKET
+prim_type           ->  NUM  |  BOOL
+local_decls         ->  local_decls  local_decl  |  eps
+local_decl          ->  VAR  IDENT  TYPEOF  type_spec  SEMI
+stmt_list           ->  stmt_list  stmt  |  eps
+stmt                ->  assign_stmt  |  print_stmt  |  return_stmt  |  if_stmt  |  while_stmt  |  compound_stmt
+assign_stmt         ->  IDENT  ASSIGN  expr  SEMI   |  IDENT  LBRACKET  expr  RBRACKET  ASSIGN  expr  SEMI
+print_stmt          ->  PRINT  expr  SEMI
+return_stmt         ->  RETURN  expr  SEMI
+if_stmt             ->  IF  expr  THEN  stmt_list  ELSE  stmt_list  END
+while_stmt          ->  WHILE  expr  BEGIN  stmt_list  END
+compound_stmt       ->  BEGIN  local_decls  stmt_list  END
+args                ->  arg_list  |  eps
+arg_list            ->  arg_list  COMMA  expr  |  expr
+expr                ->  expr  ADD  expr  |  expr  SUB  expr  |  expr  MUL  expr  |  expr  DIV  expr  |  expr  MOD  expr
+                     |  expr  EQ   expr  |  expr  NE   expr  |  expr  LE   expr  |  expr  LT   expr  |  expr  GE   expr  |  expr  GT  expr
+                     |  expr  AND  expr  |  expr  OR   expr  |  NOT  expr
+                     |  LPAREN  expr  RPAREN  |  IDENT  |  NUM_LIT  |  BOOL_LIT
+                     |  IDENT  LPAREN  args  RPAREN
+                     |  NEW  prim_type  LBRACKET  expr  RBRACKET  |  IDENT  LBRACKET  expr  RBRACKET  |  IDENT  DOT  SIZE
+
+
+========================================================================================================================
+Hint for the return types of non-terminal functions to build parse tree
+
+program         =>      Program
+decl_list       => List<FuncDecl>
+decl            =>      FuncDecl
+func_decl       =>      FuncDecl
+params          => List<Param>
+param_list      => List<Param>
+param           =>      Param
+type_spec       =>      TypeSpec
+prim_type       =>      TypeSpec
+local_decls     => List<LocalDecl>
+local_decl      =>      LocalDecl
+stmt_list       => List<Stmt>
+stmt            =>      Stmt
+assign_stmt     =>      AssignStmt or ParseTree.AssignStmtForArray
+print_stmt      =>      PrintStmt
+return_stmt     =>      ReturnStmt
+if_stmt         =>      IfStmt
+while_stmt      =>      WhileStmt
+compound_stmt   =>      CompoundStmt
+args            => List<Arg>
+arg_list        => List<Arg>
+expr            =>      classes derived from Expr
+                            : ExprAdd, ExprSub, ExprMul, ExprDiv, ExprMod,
+                              ExprEq, ExprNe, ExprLe, ExprLt, ExprGe, ExprGt,
+                              ExprAnd, ExprOr, ExprNot,
+                              ExprParen,
+                              ExprIdent, ExprNumLit, ExprBoolLit,
+                              ExprFuncCall,
+                              ExprNewArray, ExprArrayElem, ExprArraySize,
+
+
+========================================================================================================================
+Semantic Error Message Forms:
+
+"The program must have one main function that returns num value and has no parameters."
+
+"Condition of if or while statement should be bool value."
+
+"Identifier ________ is already defined."
+"Identifier ________ should be array variable."
+"Identifier ________ should be function."
+"Identifier ________ should be non-function type."
+
+"Variable ________ is not defined."
+"Array ________ is not defined."
+"Function ________() is not defined."
+
+"Variable ________ should have ________ value, instead of ________ value."
+
+"Array index must be num value."
+"Element of array ________ should have ________ value, instead of ________ value."
+
+"Function ________() should return ________ value, instead of ________ value."
+"Function ________() should return at least one value."
+"Function ________() should be called with the correct number of arguments."
+"The ________ argument of function ________() should be ________ value, instead of ________ value."
+
+"Binary operation ________ cannot be used with ________ and ________ values."
+"Unary operation ________ cannot be used with ________ value."

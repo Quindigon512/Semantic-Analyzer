@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 7:21] Binary operation + cannot be used with num and bool values.

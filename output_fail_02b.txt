@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 6:10] Variable z is not defined.

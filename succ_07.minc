@@ -1,0 +1,27 @@
+func main :: num ()
+begin
+    var x :: num ;
+    var y :: num ;
+    var z :: bool;
+    x := 1;
+    y := 2;
+    z := true;
+    begin
+        var z :: num ;
+        var x :: bool;
+        z := y + 3;
+        y := z + y;
+        begin
+            var y :: bool;
+            y := z < 10;
+            print not y;
+        end
+        x := z < y;
+        print x and z < 5;
+    end
+    print x;
+    print y;
+    print z;
+    return 1;
+    print 3.141592;
+end

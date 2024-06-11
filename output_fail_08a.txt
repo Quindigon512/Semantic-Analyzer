@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 4:12] Function pi() should return num value, instead of bool value.

@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 7:41] Identifier v1 is already defined.

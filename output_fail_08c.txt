@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 27:13] Function select() should be called with the correct number of arguments.

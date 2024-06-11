@@ -1,0 +1,18 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func main::num()
+begin
+    return 3.142592;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func main::num()
+begin
+    return 3.142592;
+end
+================================================================================
+Execute:
+Returned value by main: 3.142592
+================================================================================

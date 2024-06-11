@@ -1,0 +1,29 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func main::num()
+begin
+    var num::x;
+    var num::y;
+    x := 0.1;
+    y := x;
+    print 2.3 + 4.5;
+    return 6.7 * 8.9;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func main::num()
+begin
+    var num::x; // relative address of local variable x from this func call base pointer is 1
+    var num::y; // relative address of local variable y from this func call base pointer is 2
+    x{addr:1} := 0.1;
+    y{addr:2} := x{addr:1};
+    print 2.3 + 4.5;
+    return 6.7 * 8.9;
+end
+================================================================================
+Execute:
+6.8
+Returned value by main: 59.63
+================================================================================

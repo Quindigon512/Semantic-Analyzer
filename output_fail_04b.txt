@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 13:15] Array index must be num value.

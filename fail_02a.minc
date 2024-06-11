@@ -1,0 +1,9 @@
+func main :: num ()
+begin
+    var x :: num ;
+    var x :: num ;
+    x := 0.1 ;
+    y := x;
+    print 2.3 + 4.5 ;
+    return 6.7 * 8.9 ;
+end

@@ -1,0 +1,42 @@
+Success: no semantic error is found.
+
+================================================================================
+Code with indentations:
+func main::num()
+begin
+    var num::x;
+    var num::y;
+    if false then
+        x := 1.0;
+        y := x + 1.0;
+    else
+        x := 2.0;
+        y := (x - 10.0) * 1.5;
+    end
+    print x;
+    print y;
+    return 1.0;
+end
+================================================================================
+Code with indentations and comments for running environment:
+func main::num()
+begin
+    var num::x; // relative address of local variable x from this func call base pointer is 1
+    var num::y; // relative address of local variable y from this func call base pointer is 2
+    if false then
+        x{addr:1} := 1.0;
+        y{addr:2} := x{addr:1} + 1.0;
+    else
+        x{addr:1} := 2.0;
+        y{addr:2} := (x{addr:1} - 10.0) * 1.5;
+    end
+    print x{addr:1};
+    print y{addr:2};
+    return 1.0;
+end
+================================================================================
+Execute:
+2.0
+-12.0
+Returned value by main: 1.0
+================================================================================

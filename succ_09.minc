@@ -1,0 +1,31 @@
+
+func fib::num(n::num)
+begin
+    var n1 :: num;
+    var n2 :: num;
+    if n <= 1 then
+        return n;
+    else
+        n1 := fib(n-1);
+        n2 := fib(n-2);
+        return (n1 + n2);
+    end
+end
+
+func main :: num ()
+begin
+    var fibs :: num[];
+    var i :: num;
+
+    fibs := new num[15];
+    i := 0;
+    while i < fibs.size
+    begin
+        fibs[i] := fib(i+1);
+        i := i + 1;
+    end
+
+    print fibs;
+
+    return 1;
+end

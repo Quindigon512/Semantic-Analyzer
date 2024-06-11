@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 20:9] Variable x should have bool value, instead of num value.

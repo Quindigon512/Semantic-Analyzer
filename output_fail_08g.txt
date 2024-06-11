@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 27:38] Identifier pyra should be function.

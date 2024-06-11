@@ -1,0 +1,2 @@
+Error: there is semantic error(s).
+[Error at 24:27] Identifier pi should be non-function type.
